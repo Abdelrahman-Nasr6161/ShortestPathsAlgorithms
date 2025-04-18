@@ -248,7 +248,6 @@ public class Main {
     }
 
     private static void printPath(int source, int target, int[] parent) {
-        System.out.println("Path from " + source + " to " + target + ":");
         if (source == target) {
             System.out.print(source + " ");
             return;
