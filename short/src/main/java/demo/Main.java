@@ -131,7 +131,7 @@ public class Main {
                         System.out.println("Cost to node " + target + " = " + singleSourceCost[target]);
                     break;
                 case 2:
-                    printPath(target, singleSourceParent);
+                    printPath(source,target, singleSourceParent);
                     break;
                 default:
                     System.out.println("Invalid choice");
@@ -247,19 +247,8 @@ public class Main {
             System.out.println("No negative weight cycle detected.");
     }
 
-    private static void printPath(int target, int[] parent) {
-        if (parent[target] == -1) {
-            System.out.println("No path exists.");
-            return;
-        }
-
-        if (parent[target] != -1) {
-            printPath(parent[target], parent);
-        }
-        System.out.print(target + " ");
-    }
-
     private static void printPath(int source, int target, int[] parent) {
+        System.out.println("Path from " + source + " to " + target + ":");
         if (source == target) {
             System.out.print(source + " ");
             return;
