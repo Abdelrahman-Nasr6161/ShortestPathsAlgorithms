@@ -33,7 +33,7 @@ public class Main {
                     return;
             }
             int source = -1;
-            if (source!=3)
+            if (choice!=3)
             {
                 System.out.println("Please pick a source vertex: ");
                 source = scanner.nextInt();

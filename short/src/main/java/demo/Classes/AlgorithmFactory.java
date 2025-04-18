@@ -5,6 +5,9 @@ public class AlgorithmFactory  {
         if (algorithmName.equals("BellmanFord")) {
             return new BellmanFord();
         }
+        else if (algorithmName.equals("FloydWarshall")) {
+            return new FloydWarshall();
+        }
         return null;
     }   
 }
