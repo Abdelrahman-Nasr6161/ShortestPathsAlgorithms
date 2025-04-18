@@ -234,7 +234,12 @@ public class Main {
                 break;
             case 2:
                 // Implement Floyd-Warshall with cycle check
-                System.out.println("Floyd-Warshall negative cycle check not implemented yet.");
+                // System.out.println("Floyd-Warshall negative cycle check not implemented yet.");
+                int[][] costPairs = new int[V][V];
+                int[][] parentPairs = new int[V][V];
+                hasNegativeCycle = !Algorithms.FloydWarshall(costPairs, parentPairs);
+                
+                
                 break;
             default:
                 System.out.println("Invalid choice");

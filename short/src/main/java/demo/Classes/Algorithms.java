@@ -47,7 +47,60 @@ public class Algorithms {
     public static void Dijkstra(int source , int[] cost , int[] parent){
         throw new UnsupportedOperationException("Unimplemented method 'Dijkstra'");
     }
-    public static void FloydWarshall(int[][] allPairsCost, int[][] allPairsParent){
-        throw new UnsupportedOperationException("Unimplemented method 'FloydWarshall'");
+    public static boolean FloydWarshall(int[][] allPairsCost, int[][] allPairsParent){
+        int V = adjMatrix.length;
+        int INF = Integer.MAX_VALUE;
+
+        // Initialize all pairs as INF at first
+        for (int i=0; i<V; i++){
+            for (int j=0; j<V; j++){
+                allPairsCost[i][j] = INF;
+            }
+
+            // Initialize min distance of a vertix to itself to 0
+            allPairsCost[i][i] = 0;
+        }
+
+
+        // Initialize min distance between each 2 neighbor edges to be their weight
+        for (int u=0; u<V; u++){
+            for (int v=0; v<V; v++){
+                allPairsCost[u][v] = adjMatrix[u][v];
+            }
+        }
+
+        // Initialize all pairs paths
+        for (int u=0; u<V; u++){
+            for (int v=0; v<V; v++){
+                if (u == v || adjMatrix[u][v] == INF){
+                    allPairsParent[u][v] = -1;
+                }
+                else{
+                    allPairsParent[u][v] = u; //u -> v
+                }
+            }
+        }
+        
+
+        // Main algorithm
+        for (int k=0; k<V; k++){
+            for (int i=0; i<V; i++){
+                for (int j=0; j<V; j++){
+                    if (allPairsCost[i][k] != INF && allPairsCost[k][j] != INF && allPairsCost[i][j] > allPairsCost[i][k] + allPairsCost[k][j]){
+                        allPairsCost[i][j] = allPairsCost[i][k] + allPairsCost[k][j];
+                        allPairsParent[i][j] = allPairsParent[k][j]; 
+                    }
+                }
+            }
+        }
+
+        // Check for negative cycles
+        for (int i=0; i<V; i++){
+            if (allPairsCost[i][i] < 0){
+                return false;
+            }
+        }
+
+        return true;
     }
 }
