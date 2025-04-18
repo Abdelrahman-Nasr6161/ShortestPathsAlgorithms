@@ -1,5 +1,28 @@
 package demo.Classes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Graph {
-    
+    public static class Edge {
+        int src, dest, weight;
+        
+        Edge(int src, int dest, int weight) {
+            this.src = src;
+            this.dest = dest;
+            this.weight = weight;
+        }
+    }
+
+    int V; // number of vertices
+    List<Edge> edges;
+
+    public Graph(int V) {
+        this.V = V;
+        edges = new ArrayList<>();
+    }
+
+    public void addEdge(int src, int dest, int weight) {
+        edges.add(new Edge(src, dest, weight));
+    }
 }
