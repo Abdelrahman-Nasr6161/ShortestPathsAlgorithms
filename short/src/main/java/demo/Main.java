@@ -14,6 +14,8 @@ public class Main {
     static int[][] allPairsCost;
     static int[][] allPairsParent;
 
+    static int INF = Integer.MAX_VALUE;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -55,6 +57,13 @@ public class Main {
             V = fileScanner.nextInt();
             E = fileScanner.nextInt();
             adjMatrix = new int[V][V];
+
+            // Initilaize adjMatrix with "INF", indicating no such edge exists
+            for (int i = 0; i < V; i++){
+                for (int j = 0; j < V; j++){
+                    adjMatrix[i][j] = INF;
+                }
+            }
 
             for (int i = 0; i < E; i++) {
                 int u = fileScanner.nextInt();
