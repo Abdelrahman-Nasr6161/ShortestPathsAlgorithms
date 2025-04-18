@@ -1,20 +1,49 @@
 package demo;
 
 import demo.Classes.Graph;
+import demo.Classes.Algorithm;
 import demo.Classes.BellmanFord;
+import demo.Classes.FileReader;
+import demo.Classes.AlgorithmFactory;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
-        Graph graph = new Graph(5);
-
-        // Add the edges exactly from your graph
-        graph.addEdge(0, 1, 3);   // 1 -> 2 (weight 3)
-        graph.addEdge(0, 4, -4);  // 1 -> 5 (weight -4)
-        graph.addEdge(1, 2, 4);   // 2 -> 3 (weight 4)
-        graph.addEdge(2, 3, -5);  // 3 -> 4 (weight -5)
-        graph.addEdge(3, 1, 1);   // 4 -> 2 (weight 1)
-        graph.addEdge(4, 2, 8);   // 5 -> 3 (weight 8)
-        graph.addEdge(4, 3, 7);   // 5 -> 4 (weight 7)
-
-        BellmanFord.bellmanFord(graph, 0); // Start from node 1 (index 0)
+        try {
+            Graph graph = FileReader.readGraph("graph.txt");
+            System.out.println("Please pick an algorithm: ");
+            System.out.println("1. Dijkstra's algorithm");
+            System.out.println("2. Bellman-Ford algorithm");
+            System.out.println("3. Floyd-Warshall algorithm");
+            Scanner scanner = new Scanner(System.in);
+            int choice = scanner.nextInt();
+            String algorithmName;
+            switch (choice) {
+                case 1:
+                    algorithmName = "Dijkstra";
+                    break;
+                case 2:
+                    algorithmName = "BellmanFord";
+                    break;
+                case 3:
+                    algorithmName = "FloydWarshall";
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+                    scanner.close();
+                    return;
+            }
+            int source = -1;
+            if (source!=3)
+            {
+                System.out.println("Please pick a source vertex: ");
+                source = scanner.nextInt();
+            }
+            scanner.close();
+            Algorithm algorithm = AlgorithmFactory.getAlgorithm(algorithmName);
+            algorithm.run(graph, source);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }   
     }
 }

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class BellmanFord implements Algorithm {
 
-    public static void bellmanFord(Graph graph, int source) {
+    public void run(Graph graph, int source) {
         int V = graph.V;
         int E = graph.edges.size();
         int[] dist = new int[V];
