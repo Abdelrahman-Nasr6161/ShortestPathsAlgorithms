@@ -1,10 +1,11 @@
 package demo.Classes;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class BellmanFord implements Algorithm {
 
-    public void run(Graph graph, int source) {
+    public boolean run(Graph graph, int source) {
         int V = graph.V;
         int E = graph.edges.size();
         int[] dist = new int[V];
@@ -31,20 +32,14 @@ public class BellmanFord implements Algorithm {
             int weight = edge.weight;
             if (dist[u] != Integer.MAX_VALUE && dist[u] + weight < dist[v]) {
                 System.out.println("Graph contains a negative-weight cycle");
-                return;
+                graph.finalDist = Arrays.stream(dist).boxed().collect(Collectors.toList());
+                return false;
             }
         }
 
-        printDistances(dist, source);
+        graph.finalDist = Arrays.stream(dist).boxed().collect(Collectors.toList());
+        return true;
     }
 
-    private static void printDistances(int[] dist, int source) {
-        System.out.println("Vertex Distance from Source " + (source + 1));
-        for (int i = 0; i < dist.length; ++i) {
-            if (dist[i] == Integer.MAX_VALUE)
-                System.out.println((i + 1) + "\t\t" + "INF");
-            else
-                System.out.println((i + 1) + "\t\t" + dist[i]);
-        }
-    }
+    
 }

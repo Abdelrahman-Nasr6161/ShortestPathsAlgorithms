@@ -14,9 +14,9 @@ public class Graph {
         }
     }
 
-    int V; // number of vertices
-    List<Edge> edges;
-
+    public int V; // number of vertices
+    public List<Edge> edges;
+    public List<Integer> finalDist;
     public Graph(int V) {
         this.V = V;
         edges = new ArrayList<>();

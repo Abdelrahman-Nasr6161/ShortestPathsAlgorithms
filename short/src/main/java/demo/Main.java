@@ -2,7 +2,6 @@ package demo;
 
 import demo.Classes.Graph;
 import demo.Classes.Algorithm;
-import demo.Classes.BellmanFord;
 import demo.Classes.FileReader;
 import demo.Classes.AlgorithmFactory;
 import java.io.FileNotFoundException;
@@ -41,7 +40,13 @@ public class Main {
             }
             scanner.close();
             Algorithm algorithm = AlgorithmFactory.getAlgorithm(algorithmName);
-            algorithm.run(graph, source);
+            boolean success = algorithm.run(graph, source);
+            if (success) {
+                System.out.println("Shortest distances from source " + source + ":");
+                for (int i = 0; i < graph.V; i++) {
+                    System.out.println("Vertex " + (i + 1) + ": " + graph.finalDist.get(i));
+                }
+            }
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }   
