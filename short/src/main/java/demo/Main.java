@@ -269,16 +269,34 @@ public class Main {
     }
 
     private static void printPath(int source, int target, int[] parent) {
+        // Check if the target is unreachable
+        if (singleSourceCost[target] == Integer.MAX_VALUE) {
+            System.out.println("No path exists.");
+            return;
+        }
+
+        // Detect invalid or cyclic parent references
+        boolean[] visited = new boolean[parent.length];
+        int current = target;
+        while (current != -1) {
+            if (visited[current]) {
+                System.out.println("Error: Cycle detected in the path.");
+                return;
+            }
+            visited[current] = true;
+            current = parent[current];
+        }
+
+        // Print the path recursively
         if (source == target) {
             System.out.print(source + " ");
             return;
         }
         if (parent[target] == -1) {
-            System.out.print("No path exists.");
+            System.out.println("No path exists.");
             return;
         }
         printPath(source, parent[target], parent);
         System.out.print(target + " ");
-
     }
 }
