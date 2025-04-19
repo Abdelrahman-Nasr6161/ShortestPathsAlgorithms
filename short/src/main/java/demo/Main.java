@@ -20,7 +20,17 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        loadGraph();
+        String graphPath = "short/graph.txt";
+        String input;
+
+        System.out.println("Enter the graph input file path (Default: short/graph.txt): \n");
+        input = scanner.nextLine().trim();
+
+        if (!input.isEmpty()) {
+            graphPath = input;
+        }
+
+        loadGraph(graphPath);
 
         while (true) {
             System.out.println("\nMain Menu:");
@@ -50,9 +60,9 @@ public class Main {
         }
     }
 
-    private static void loadGraph() {
+    private static void loadGraph(String graphPath) {
         try {
-            File file = new File("short/graph.txt");
+            File file = new File(graphPath);
             Scanner fileScanner = new Scanner(file);
 
             V = fileScanner.nextInt();
@@ -60,8 +70,8 @@ public class Main {
             adjMatrix = new int[V][V];
 
             // Initilaize adjMatrix with "INF", indicating no such edge exists
-            for (int i = 0; i < V; i++){
-                for (int j = 0; j < V; j++){
+            for (int i = 0; i < V; i++) {
+                for (int j = 0; j < V; j++) {
                     adjMatrix[i][j] = INF;
                 }
             }
@@ -73,7 +83,7 @@ public class Main {
                 adjMatrix[u][v] = w;
                 System.out.println(u + " " + v + " " + w);
                 // if(w < 0) {
-                //     negativeWeight = true;
+                // negativeWeight = true;
                 // }
             }
 
@@ -110,7 +120,7 @@ public class Main {
             case 3:
                 allPairsCost = new int[V][V];
                 allPairsParent = new int[V][V];
-                Algorithms.FloydWarshall(allPairsCost, allPairsParent);
+                success = Algorithms.FloydWarshall(allPairsCost, allPairsParent);
                 for (int i = 0; i < V; i++) {
                     singleSourceCost[i] = allPairsCost[source][i];
                     singleSourceParent[i] = allPairsParent[source][i];
@@ -134,7 +144,8 @@ public class Main {
             System.out.println("3. Exit to main menu");
             int subChoice = scanner.nextInt();
 
-            if (subChoice == 3) break;
+            if (subChoice == 3)
+                break;
 
             System.out.println("Enter target node:");
             int target = scanner.nextInt();
@@ -161,10 +172,10 @@ public class Main {
         System.out.println("2. Bellman-Ford");
         System.out.println("3. Floyd-Warshall");
         int algoChoice = scanner.nextInt();
-    
+
         allPairsCost = new int[V][V];
         allPairsParent = new int[V][V];
-    
+
         switch (algoChoice) {
             case 1:
                 // Dijkstra All Pairs
@@ -196,13 +207,17 @@ public class Main {
                 break;
             case 3:
                 // Floyd-Warshall
-                Algorithms.FloydWarshall(allPairsCost, allPairsParent);
+                boolean noNegativeCycle = Algorithms.FloydWarshall(allPairsCost, allPairsParent);
+                if (!noNegativeCycle) {
+                    System.out.println("Negative cycle detected. Cannot complete Floyd-Warshall for all pairs.");
+                    return; // Exit the method early
+                }
                 break;
             default:
                 System.out.println("Invalid choice.");
                 return;
         }
-    
+
         // Sub-menu for all pairs operations
         while (true) {
             System.out.println("\nAll Pairs Sub-Menu:");
@@ -210,14 +225,15 @@ public class Main {
             System.out.println("2. Get path from node i to j");
             System.out.println("3. Exit to main menu");
             int subChoice = scanner.nextInt();
-    
-            if (subChoice == 3) break;
-    
+
+            if (subChoice == 3)
+                break;
+
             System.out.println("Enter source node:");
             int u = scanner.nextInt();
             System.out.println("Enter destination node:");
             int v = scanner.nextInt();
-    
+
             switch (subChoice) {
                 case 1:
                     if (allPairsCost[u][v] == Integer.MAX_VALUE)
@@ -250,12 +266,12 @@ public class Main {
                 break;
             case 2:
                 // Implement Floyd-Warshall with cycle check
-                // System.out.println("Floyd-Warshall negative cycle check not implemented yet.");
+                // System.out.println("Floyd-Warshall negative cycle check not implemented
+                // yet.");
                 int[][] costPairs = new int[V][V];
                 int[][] parentPairs = new int[V][V];
                 hasNegativeCycle = !Algorithms.FloydWarshall(costPairs, parentPairs);
-                
-                
+
                 break;
             default:
                 System.out.println("Invalid choice");
