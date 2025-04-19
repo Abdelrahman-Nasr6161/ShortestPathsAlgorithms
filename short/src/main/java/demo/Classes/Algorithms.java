@@ -1,4 +1,5 @@
 package demo.Classes;
+import java.util.*;
 
 public class Algorithms {
     public static int[][] adjMatrix;
@@ -45,7 +46,40 @@ public class Algorithms {
         return true; // No negative cycles
     }
     public static void Dijkstra(int source , int[] cost , int[] parent){
-        throw new UnsupportedOperationException("Unimplemented method 'Dijkstra'");
+        // throw new UnsupportedOperationException("Unimplemented method 'Dijkstra'");
+        int V = adjMatrix.length;
+
+        // Initialize cost and parent arrays
+        Arrays.fill(cost, Integer.MAX_VALUE);
+        Arrays.fill(parent, -1);
+        cost[source] = 0;
+
+        // Priority queue to select the vertex with the minimum cost
+        PriorityQueue<Node> pq = new PriorityQueue<>();
+
+        pq.add(new Node(source, 0));
+        boolean[] visited = new boolean[V];
+
+        while (!pq.isEmpty()) {
+            // Get the vertex with the minimum cost
+            Node current = pq.poll();
+            int u = current.vertex;
+
+            if (visited[u]) continue; 
+            
+            visited[u] = true;
+            for (int v = 0; v < V; v++) {
+                int weight = adjMatrix[u][v];
+                if (weight != Integer.MAX_VALUE && !visited[v]) { 
+                    if (cost[u] != Integer.MAX_VALUE && cost[u] + weight < cost[v]) {
+                        cost[v] = cost[u] + weight;
+                        parent[v] = u;
+                        pq.add(new Node(v, cost[v]));
+                    }
+                }
+            }
+        }
+        
     }
     public static boolean FloydWarshall(int[][] allPairsCost, int[][] allPairsParent){
         int V = adjMatrix.length;

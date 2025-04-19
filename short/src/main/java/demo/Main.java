@@ -13,6 +13,7 @@ public class Main {
     static int[] singleSourceParent;
     static int[][] allPairsCost;
     static int[][] allPairsParent;
+    // static boolean negativeWeight = false;
 
     static int INF = Integer.MAX_VALUE;
 
@@ -70,6 +71,9 @@ public class Main {
                 int v = fileScanner.nextInt();
                 int w = fileScanner.nextInt();
                 adjMatrix[u][v] = w;
+                // if(w < 0) {
+                //     negativeWeight = true;
+                // }
             }
 
             fileScanner.close();
@@ -97,7 +101,7 @@ public class Main {
 
         switch (algoChoice) {
             case 1:
-                // Call Algorithms.Dijkstra(source, singleSourceCost, singleSourceParent);
+                // Algorithms.Dijkstra(source, singleSourceCost, singleSourceParent);
                 System.out.println("Dijkstra is not implemented yet.");
                 success = false;
                 break;
