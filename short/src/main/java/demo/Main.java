@@ -13,6 +13,9 @@ public class Main {
     static int[] singleSourceParent;
     static int[][] allPairsCost;
     static int[][] allPairsParent;
+    // static boolean negativeWeight = false;
+
+    static int INF = Integer.MAX_VALUE;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -49,18 +52,29 @@ public class Main {
 
     private static void loadGraph() {
         try {
-            File file = new File("graph.txt");
+            File file = new File("short/graph.txt");
             Scanner fileScanner = new Scanner(file);
 
             V = fileScanner.nextInt();
             E = fileScanner.nextInt();
             adjMatrix = new int[V][V];
 
+            // Initilaize adjMatrix with "INF", indicating no such edge exists
+            for (int i = 0; i < V; i++){
+                for (int j = 0; j < V; j++){
+                    adjMatrix[i][j] = INF;
+                }
+            }
+
             for (int i = 0; i < E; i++) {
                 int u = fileScanner.nextInt();
                 int v = fileScanner.nextInt();
                 int w = fileScanner.nextInt();
                 adjMatrix[u][v] = w;
+                System.out.println(u + " " + v + " " + w);
+                // if(w < 0) {
+                //     negativeWeight = true;
+                // }
             }
 
             fileScanner.close();
@@ -88,7 +102,7 @@ public class Main {
 
         switch (algoChoice) {
             case 1:
-                // Call Algorithms.Dijkstra(source, singleSourceCost, singleSourceParent);
+                // Algorithms.Dijkstra(source, singleSourceCost, singleSourceParent);
                 System.out.println("Dijkstra is not implemented yet.");
                 success = false;
                 break;
@@ -234,7 +248,12 @@ public class Main {
                 break;
             case 2:
                 // Implement Floyd-Warshall with cycle check
-                System.out.println("Floyd-Warshall negative cycle check not implemented yet.");
+                // System.out.println("Floyd-Warshall negative cycle check not implemented yet.");
+                int[][] costPairs = new int[V][V];
+                int[][] parentPairs = new int[V][V];
+                hasNegativeCycle = !Algorithms.FloydWarshall(costPairs, parentPairs);
+                
+                
                 break;
             default:
                 System.out.println("Invalid choice");
@@ -258,6 +277,6 @@ public class Main {
         }
         printPath(source, parent[target], parent);
         System.out.print(target + " ");
-        
+
     }
 }
