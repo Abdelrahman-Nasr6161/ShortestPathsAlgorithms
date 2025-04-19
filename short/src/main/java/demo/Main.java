@@ -102,17 +102,19 @@ public class Main {
 
         switch (algoChoice) {
             case 1:
-                // Algorithms.Dijkstra(source, singleSourceCost, singleSourceParent);
-                System.out.println("Dijkstra is not implemented yet.");
-                success = false;
+                Algorithms.Dijkstra(source, singleSourceCost, singleSourceParent);
                 break;
             case 2:
                 success = Algorithms.BellmanFord(source, singleSourceCost, singleSourceParent);
                 break;
             case 3:
-                // Call Algorithms.FloydWarshallSingleSource(source, singleSourceCost, singleSourceParent);
-                System.out.println("Floyd-Warshall (single source) not implemented yet.");
-                success = false;
+                allPairsCost = new int[V][V];
+                allPairsParent = new int[V][V];
+                Algorithms.FloydWarshall(allPairsCost, allPairsParent);
+                for (int i = 0; i < V; i++) {
+                    singleSourceCost[i] = allPairsCost[source][i];
+                    singleSourceParent[i] = allPairsParent[source][i];
+                }
                 break;
             default:
                 System.out.println("Invalid choice");
