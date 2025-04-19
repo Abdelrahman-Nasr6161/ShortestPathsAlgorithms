@@ -147,7 +147,7 @@ public class Main {
                         System.out.println("Cost to node " + target + " = " + singleSourceCost[target]);
                     break;
                 case 2:
-                    printPath(source,target, singleSourceParent);
+                    printPath(source, target, singleSourceParent, allPairsCost);
                     break;
                 default:
                     System.out.println("Invalid choice");
@@ -226,7 +226,7 @@ public class Main {
                         System.out.println("Cost from " + u + " to " + v + " = " + allPairsCost[u][v]);
                     break;
                 case 2:
-                    printPath(u, v, allPairsParent[u]);
+                    printPath(u, v, allPairsParent[u], allPairsCost);
                     break;
                 default:
                     System.out.println("Invalid choice");
@@ -268,26 +268,23 @@ public class Main {
             System.out.println("No negative weight cycle detected.");
     }
 
-    private static void printPath(int source, int target, int[] parent) {
-        // Check if the target is unreachable
-        if (singleSourceCost[target] == Integer.MAX_VALUE) {
+    private static void printPath(int source, int target, int[] parent, int[][] costMatrix) {
+        if (costMatrix[source][target] == Integer.MAX_VALUE) {
             System.out.println("No path exists.");
             return;
         }
 
-        // Detect invalid or cyclic parent references
         boolean[] visited = new boolean[parent.length];
         int current = target;
         while (current != -1) {
             if (visited[current]) {
-                System.out.println("Error: Cycle detected in the path.");
+                System.out.println("Cycle detected in the path.");
                 return;
             }
             visited[current] = true;
             current = parent[current];
         }
 
-        // Print the path recursively
         if (source == target) {
             System.out.print(source + " ");
             return;
@@ -296,7 +293,7 @@ public class Main {
             System.out.println("No path exists.");
             return;
         }
-        printPath(source, parent[target], parent);
+        printPath(source, parent[target], parent, costMatrix);
         System.out.print(target + " ");
     }
 }
