@@ -1,4 +1,5 @@
 package demo.Classes;
+
 import java.util.*;
 
 public class Algorithms {
@@ -10,7 +11,7 @@ public class Algorithms {
 
     public static boolean BellmanFord(int source, int[] cost, int[] parent) {
         int n = adjMatrix.length;
-        
+
         // Initialize cost and parent arrays
         for (int i = 0; i < n; i++) {
             cost[i] = Integer.MAX_VALUE;
@@ -45,7 +46,8 @@ public class Algorithms {
 
         return true; // No negative cycles
     }
-    public static void Dijkstra(int source , int[] cost , int[] parent){
+
+    public static void Dijkstra(int source, int[] cost, int[] parent) {
         // throw new UnsupportedOperationException("Unimplemented method 'Dijkstra'");
         int V = adjMatrix.length;
 
@@ -65,12 +67,13 @@ public class Algorithms {
             Node current = pq.poll();
             int u = current.vertex;
 
-            if (visited[u]) continue; 
-            
+            if (visited[u])
+                continue;
+
             visited[u] = true;
             for (int v = 0; v < V; v++) {
                 int weight = adjMatrix[u][v];
-                if (weight != Integer.MAX_VALUE && !visited[v]) { 
+                if (weight != Integer.MAX_VALUE && !visited[v]) {
                     if (cost[u] != Integer.MAX_VALUE && cost[u] + weight < cost[v]) {
                         cost[v] = cost[u] + weight;
                         parent[v] = u;
@@ -79,15 +82,16 @@ public class Algorithms {
                 }
             }
         }
-        
+
     }
-    public static boolean FloydWarshall(int[][] allPairsCost, int[][] allPairsParent){
+
+    public static boolean FloydWarshall(int[][] allPairsCost, int[][] allPairsParent) {
         int V = adjMatrix.length;
         int INF = Integer.MAX_VALUE;
 
         // Initialize all pairs as INF at first
-        for (int i=0; i<V; i++){
-            for (int j=0; j<V; j++){
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
                 allPairsCost[i][j] = INF;
             }
 
@@ -95,45 +99,45 @@ public class Algorithms {
             allPairsCost[i][i] = 0;
         }
 
-
         // Initialize min distance between each 2 neighbor edges to be their weight
-        for (int u=0; u<V; u++){
-            for (int v=0; v<V; v++){
+        for (int u = 0; u < V; u++) {
+            for (int v = 0; v < V; v++) {
                 allPairsCost[u][v] = adjMatrix[u][v];
             }
         }
 
         // Initialize all pairs paths
-        for (int u=0; u<V; u++){
-            for (int v=0; v<V; v++){
-                if (u == v || adjMatrix[u][v] == INF){
+        for (int u = 0; u < V; u++) {
+            for (int v = 0; v < V; v++) {
+                if (u == v || adjMatrix[u][v] == INF) {
                     allPairsParent[u][v] = -1;
-                }
-                else{
-                    allPairsParent[u][v] = u; //u -> v
+                } else {
+                    allPairsParent[u][v] = u; // u -> v
                 }
             }
         }
-        
 
         // Main algorithm
-        for (int k=0; k<V; k++){
-            for (int i=0; i<V; i++){
-                for (int j=0; j<V; j++){
-                    if (allPairsCost[i][k] != INF && allPairsCost[k][j] != INF && allPairsCost[i][j] > allPairsCost[i][k] + allPairsCost[k][j]){
+        for (int k = 0; k < V; k++) {
+            for (int i = 0; i < V; i++) {
+                for (int j = 0; j < V; j++) {
+                    if (allPairsCost[i][k] != INF && allPairsCost[k][j] != INF
+                            && allPairsCost[i][j] > allPairsCost[i][k] + allPairsCost[k][j]) {
                         allPairsCost[i][j] = allPairsCost[i][k] + allPairsCost[k][j];
-                        allPairsParent[i][j] = allPairsParent[k][j]; 
+                        allPairsParent[i][j] = allPairsParent[k][j];
                     }
                 }
             }
         }
 
         // Check for negative cycles
-        for (int i=0; i<V; i++){
-            if (allPairsCost[i][i] < 0){
+        for (int i = 0; i < V; i++) {
+            if (allPairsCost[i][i] < 0) {
                 return false;
             }
         }
+
+        System.out.println("Inside algo: " + allPairsCost[0][0]);
 
         return true;
     }
