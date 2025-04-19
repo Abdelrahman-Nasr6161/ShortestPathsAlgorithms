@@ -137,8 +137,6 @@ public class Algorithms {
             }
         }
 
-        System.out.println("Inside algo: " + allPairsCost[0][0]);
-
         return true;
     }
 }

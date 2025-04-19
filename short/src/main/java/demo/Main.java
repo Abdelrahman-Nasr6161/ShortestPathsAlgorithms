@@ -19,20 +19,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // int[][] adjMatrix = {
-        // { 0, 3, 8, INF, -4 },
-        // { INF, 0, INF, 1, 7 },
-        // { INF, 4, 0, -5, INF },
-        // { 2, INF, INF, 0, INF },
-        // { INF, INF, INF, 6, 0 }
-        // };
-
-        // int[][] cost = new int[adjMatrix.length][adjMatrix.length];
-        // int[][] parent = new int[adjMatrix.length][adjMatrix.length];
-
-        // Algorithms.setAdjMatrix(adjMatrix);
-        // boolean result = Algorithms.FloydWarshall(cost, parent);
-
         Scanner scanner = new Scanner(System.in);
 
         String graphPath = "short/graph.txt";
